@@ -33,6 +33,7 @@ import {
   HelpCircle,
   Layers,
   Clock,
+  Download,
 } from "lucide-react";
 import type { Project, Note } from "@/types";
 
@@ -283,12 +284,24 @@ export default function ProjectDetailPage({
             )}
           </div>
 
-          <Button asChild className="btn-spring text-sm">
-            <Link href={`/projects/${id}/notes/new`}>
-              <Plus className="mr-1.5 h-4 w-4" />
-              添加笔记
-            </Link>
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-xl border-[var(--color-border)] bg-[var(--color-surface)] text-sm"
+            >
+              <Link href={`/projects/${id}/export`}>
+                <Download className="mr-1.5 h-4 w-4" />
+                导出中心
+              </Link>
+            </Button>
+            <Button asChild className="btn-spring text-sm">
+              <Link href={`/projects/${id}/notes/new`}>
+                <Plus className="mr-1.5 h-4 w-4" />
+                添加笔记
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
 

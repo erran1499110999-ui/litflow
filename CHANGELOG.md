@@ -1,5 +1,18 @@
 # LitFlow 更新日志
 
+## [v2.5.0] - 2026-05-19
+
+### 新增
+- 导出中心页面（`/projects/[id]/export`），支持选择提纲版本并导出为 Markdown / Word / HTML / PDF
+- 新增 `/api/files/export` 接口，统一处理多格式导出请求
+- 导出工具 `lib/file-exporter.ts`，封装 Markdown → HTML / DOCX / PDF 的转换链路
+
+### 优化
+- 项目详情页与提纲页都增加了“导出中心”入口
+- 设置页版本展示同步更新到当前最新版本
+
+---
+
 ## [v2.4.0] - 2026-05-19
 
 ### 新增

@@ -114,6 +114,40 @@ export default function OutlinePage({
     URL.revokeObjectURL(url);
   };
 
+  const exportByFormat = async (format: "docx" | "html" | "pdf") => {
+    if (!rawMarkdown) return;
+
+    try {
+      const response = await fetch("/api/files/export", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          format,
+          title: outline?.outline?.title || "综述提纲",
+          markdown: rawMarkdown,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        throw new Error(data?.error || "导出失败");
+      }
+
+      const blob = await response.blob();
+      const disposition = response.headers.get("Content-Disposition") || "";
+      const match = disposition.match(/filename\*=UTF-8''([^;]+)/);
+      const filename = match ? decodeURIComponent(match[1]) : `outline.${format}`;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "导出失败");
+    }
+  };
+
   const toggleTheme = (index: number) => {
     setExpandedThemes((prev) => {
       const next = new Set(prev);
@@ -347,7 +381,7 @@ export default function OutlinePage({
                 可编辑、可导出，AI 生成结果仅供参考
               </p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <Button
                 variant="outline"
                 onClick={copyToClipboard}
@@ -371,6 +405,36 @@ export default function OutlinePage({
               >
                 <Download className="mr-2 h-4 w-4" />
                 导出 Markdown
+              </Button>
+              <Button
+                variant="outline"
+                asChild
+                className="rounded-xl border-[var(--color-border)]"
+              >
+                <Link href={`/projects/${id}/export`}>
+                  导出中心
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => exportByFormat("docx")}
+                className="rounded-xl border-[var(--color-border)]"
+              >
+                导出 Word
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => exportByFormat("html")}
+                className="rounded-xl border-[var(--color-border)]"
+              >
+                导出 HTML
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => exportByFormat("pdf")}
+                className="rounded-xl border-[var(--color-border)]"
+              >
+                导出 PDF
               </Button>
             </div>
           </div>
