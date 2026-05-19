@@ -1,0 +1,51 @@
+{
+  "common": {
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "export": "导出",
+    "upload": "上传",
+    "search": "搜索",
+    "settings": "设置",
+    "loading": "加载中..."
+  },
+  "nav": {
+    "projects": "我的项目",
+    "changelog": "更新日志",
+    "settings": "设置",
+    "knowledgeGraph": "知识图谱",
+    "superego": "文本超我"
+  },
+  "notes": {
+    "add": "添加笔记",
+    "type_excerpt": "摘录",
+    "type_thought": "想法",
+    "type_question": "疑问",
+    "paper_title": "论文标题",
+    "tags": "标签",
+    "content_placeholder": "记录你的阅读笔记..."
+  },
+  "outline": {
+    "generate": "生成综述提纲",
+    "generating": "AI 正在分析你的笔记...",
+    "themes": "主题分组",
+    "relationships": "论文关系",
+    "gaps": "研究空白",
+    "export_md": "导出 Markdown",
+    "export_word": "导出 Word",
+    "export_pdf": "导出 PDF"
+  },
+  "superego": {
+    "title": "文本超我",
+    "subtitle": "学术人格蒸馏",
+    "upload_hint": "拖拽文件到此处，或点击上传",
+    "upload_suggest": "建议上传 3-10 篇同一作者的论文",
+    "target_self": "蒸馏自我",
+    "target_other": "蒸馏他人",
+    "start": "开始蒸馏",
+    "result_interests": "核心研究兴趣",
+    "result_style": "写作风格特征",
+    "result_stance": "学术立场",
+    "result_expressions": "常用表达"
+  }
+}

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,6 +18,8 @@ import {
   Info,
   ExternalLink,
   ChevronRight,
+  Brain,
+  Languages,
 } from "lucide-react";
 
 export default function SettingsPage() {
@@ -130,7 +133,7 @@ export default function SettingsPage() {
           <div className="grid grid-cols-2 gap-px rounded-xl bg-[var(--color-border)] overflow-hidden">
             <div className="bg-[var(--color-bg)] p-3">
               <span className="text-[var(--color-text-muted)] text-xs">版本</span>
-              <p className="text-[var(--color-text)] font-medium">2.4.0</p>
+              <p className="text-[var(--color-text)] font-medium">2.6.0</p>
             </div>
             <div className="bg-[var(--color-bg)] p-3">
               <span className="text-[var(--color-text-muted)] text-xs">状态</span>
@@ -154,6 +157,34 @@ export default function SettingsPage() {
           </a>
         </CardContent>
       </Card>
+
+      {/* 子功能入口 */}
+      <div className="mb-6 grid gap-4 md:grid-cols-2">
+        <Link href="/settings/llm" className="card-spring border-[var(--color-border)] bg-[var(--color-surface)]">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-100">
+              <Brain className="h-5 w-5 text-primary-600" strokeWidth={1.5} />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-[var(--color-text)]">LLM 接口配置</p>
+              <p className="text-xs text-[var(--color-text-muted)]">DeepSeek / OpenAI / Claude 配置</p>
+            </div>
+            <ChevronRight className="ml-auto h-4 w-4 text-[var(--color-text-muted)]" />
+          </div>
+        </Link>
+        <Link href="/settings/language" className="card-spring border-[var(--color-border)] bg-[var(--color-surface)]">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-spring-100">
+              <Languages className="h-5 w-5 text-spring-600" strokeWidth={1.5} />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-[var(--color-text)]">语言设置</p>
+              <p className="text-xs text-[var(--color-text-muted)]">中文 / English / 日本語 等</p>
+            </div>
+            <ChevronRight className="ml-auto h-4 w-4 text-[var(--color-text-muted)]" />
+          </div>
+        </Link>
+      </div>
 
       {/* 统计数据 */}
       <Card className="border-[var(--color-border)] bg-[var(--color-surface)] shadow-sm">

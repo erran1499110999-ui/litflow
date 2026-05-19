@@ -45,6 +45,44 @@ export interface Outline {
   created_at: string;
 }
 
+export interface SuperEgoProfile {
+  id: string;
+  project_id: string;
+  user_id: string;
+  name: string;
+  target_type: "self" | "other";
+  source_files: string[];
+  result: SuperEgoResult | null;
+  raw_text: string | null;
+  model_used: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface UploadedFileRecord {
+  id: string;
+  user_id: string;
+  project_id: string | null;
+  superego_id: string | null;
+  filename: string;
+  file_type: string;
+  file_size: number | null;
+  extracted_text: string | null;
+  storage_path: string | null;
+  created_at: string;
+}
+
+export interface UserSettings {
+  id: string;
+  user_id: string;
+  language: string;
+  default_llm_provider: string;
+  llm_configs: Record<string, unknown>;
+  theme: string;
+  created_at: string;
+  updated_at: string;
+}
+
 // ===== AI 生成的结构 =====
 
 export interface OutlineContent {
@@ -92,6 +130,48 @@ export interface Gap {
   area: string;
   suggestion: string;
   reason: string;
+}
+
+export interface SuperEgoInterest {
+  topic: string;
+  evidence: string;
+  depth: "core" | "secondary" | "emerging";
+}
+
+export interface SuperEgoWritingStyle {
+  structure_pattern: string;
+  paragraph_style: string;
+  evidence_preference: string;
+  tone: string;
+  sentence_features: string[];
+}
+
+export interface SuperEgoAcademicStance {
+  methodology: string;
+  epistemology: string;
+  key_positions: string[];
+}
+
+export interface SuperEgoExpressions {
+  frequent_phrases: string[];
+  transition_patterns: string[];
+  hedging_style: string;
+}
+
+export interface SuperEgoVocabulary {
+  domain_terms: string[];
+  preferred_verbs: string[];
+  avoidance: string[];
+}
+
+export interface SuperEgoResult {
+  profile_name: string;
+  research_interests: SuperEgoInterest[];
+  writing_style: SuperEgoWritingStyle;
+  academic_stance: SuperEgoAcademicStance;
+  expressions: SuperEgoExpressions;
+  vocabulary: SuperEgoVocabulary;
+  summary: string;
 }
 
 // ===== API 响应格式 =====

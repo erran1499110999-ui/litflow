@@ -34,6 +34,8 @@ import {
   Layers,
   Clock,
   Download,
+  Brain,
+  Network,
 } from "lucide-react";
 import type { Project, Note } from "@/types";
 
@@ -284,7 +286,27 @@ export default function ProjectDetailPage({
             )}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-xl border-[var(--color-border)] bg-[var(--color-surface)] text-sm"
+            >
+              <Link href={`/projects/${id}/graph`}>
+                <Network className="mr-1.5 h-4 w-4" />
+                知识图谱
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-xl border-[var(--color-border)] bg-[var(--color-surface)] text-sm"
+            >
+              <Link href={`/projects/${id}/superego`}>
+                <Brain className="mr-1.5 h-4 w-4" />
+                文本超我
+              </Link>
+            </Button>
             <Button
               asChild
               variant="outline"

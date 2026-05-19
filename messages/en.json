@@ -1,0 +1,51 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "export": "Export",
+    "upload": "Upload",
+    "search": "Search",
+    "settings": "Settings",
+    "loading": "Loading..."
+  },
+  "nav": {
+    "projects": "Projects",
+    "changelog": "Changelog",
+    "settings": "Settings",
+    "knowledgeGraph": "Knowledge Graph",
+    "superego": "Text Superego"
+  },
+  "notes": {
+    "add": "Add Note",
+    "type_excerpt": "Excerpt",
+    "type_thought": "Thought",
+    "type_question": "Question",
+    "paper_title": "Paper Title",
+    "tags": "Tags",
+    "content_placeholder": "Write your reading notes..."
+  },
+  "outline": {
+    "generate": "Generate Outline",
+    "generating": "AI is analyzing your notes...",
+    "themes": "Themes",
+    "relationships": "Paper Relationships",
+    "gaps": "Research Gaps",
+    "export_md": "Export Markdown",
+    "export_word": "Export Word",
+    "export_pdf": "Export PDF"
+  },
+  "superego": {
+    "title": "Text Superego",
+    "subtitle": "Academic Persona Distillation",
+    "upload_hint": "Drop files here or click to upload",
+    "upload_suggest": "Upload 3-10 papers from the same author",
+    "target_self": "Distill Self",
+    "target_other": "Distill Other",
+    "start": "Start Distillation",
+    "result_interests": "Core Research Interests",
+    "result_style": "Writing Style",
+    "result_stance": "Academic Stance",
+    "result_expressions": "Frequent Expressions"
+  }
+}

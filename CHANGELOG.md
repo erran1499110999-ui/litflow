@@ -1,5 +1,23 @@
 # LitFlow 更新日志
 
+## [v2.6.0] - 2026-05-19
+
+### 新增
+- 文本超我页面（`/projects/[id]/superego`），支持输入蒸馏目标、上传文本素材与粘贴文本进行学术人格蒸馏
+- 新增 `/api/ai/distill-superego` 接口，结合统一 LLM 调用封装完成蒸馏结果生成与保存
+- 新增 `lib/llm.ts`，统一兼容 DeepSeek / OpenAI / Anthropic 调用格式
+- 设置子页面：`/settings/llm` 与 `/settings/language`
+- next-intl 基础配置文件与多语言消息文件（zh-CN / zh-TW / en / ja / ko / de / fr）
+- `user_settings`、`superego_profiles`、`uploaded_files` 的类型定义与数据库 SQL 扩展
+
+### 优化
+- 项目详情页增加“文本超我”“知识图谱”“导出中心”入口
+- 设置主页增加 LLM 配置与语言设置快捷入口
+- 设置 API（`/api/settings`）支持读取与保存用户设置
+- 设置页版本展示同步更新为最新版本
+
+---
+
 ## [v2.5.0] - 2026-05-19
 
 ### 新增
