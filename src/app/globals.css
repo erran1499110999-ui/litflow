@@ -4,64 +4,54 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.141 0.005 285.823);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.21 0.006 285.885);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
+  /* ===== 春日暖色调色彩体系 ===== */
+  /* 主色：暖杏色 */
+  --color-primary: oklch(75% 0.12 55);
+  --color-primary-deep: oklch(65% 0.15 55);
+  --color-primary-light: oklch(92% 0.04 55);
+  /* 辅助色：春芽绿 */
+  --color-accent: oklch(72% 0.12 155);
+  --color-accent-light: oklch(94% 0.04 155);
+  --color-accent-mist: oklch(72% 0.12 155 / 0.15);
+  /* 文字色 */
+  --color-text: oklch(15% 0 0);
+  --color-text-secondary: oklch(35% 0 0);
+  --color-text-muted: oklch(55% 0 0);
+  /* 背景 */
+  --color-bg: oklch(97% 0.005 55);
+  --color-surface: oklch(99% 0.002 55);
+  /* 边框 */
+  --color-border: oklch(90% 0.005 55);
+  --color-border-hover: oklch(75% 0.08 55);
+  /* shadcn/ui 兼容变量 */
+  --background: oklch(97% 0.005 55);
+  --foreground: oklch(15% 0 0);
+  --card: oklch(99% 0.002 55);
+  --card-foreground: oklch(15% 0 0);
+  --popover: oklch(99% 0.002 55);
+  --popover-foreground: oklch(15% 0 0);
+  --primary: oklch(75% 0.12 55);
+  --primary-foreground: oklch(99% 0.002 55);
+  --secondary: oklch(94% 0.04 155);
+  --secondary-foreground: oklch(15% 0 0);
+  --muted: oklch(94% 0.04 155);
+  --muted-foreground: oklch(55% 0 0);
+  --accent: oklch(72% 0.12 155);
+  --accent-foreground: oklch(99% 0.002 55);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.705 0.015 286.067);
-  --radius: 0.625rem;
-  --sidebar-background: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-primary: oklch(0.21 0.006 285.885);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.705 0.015 286.067);
-}
-
-.dark {
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.141 0.005 285.823);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.141 0.005 285.823);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.21 0.006 285.885);
-  --secondary: oklch(0.274 0.006 286.033);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.274 0.006 286.033);
-  --input: oklch(0.274 0.006 286.033);
-  --ring: oklch(0.442 0.017 285.786);
-  --sidebar-background: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.274 0.006 286.033);
-  --sidebar-ring: oklch(0.442 0.017 285.786);
+  --border: oklch(90% 0.005 55);
+  --input: oklch(90% 0.005 55);
+  --ring: oklch(75% 0.08 55);
+  --radius: 0.75rem;
+  --sidebar-background: oklch(99% 0.002 55);
+  --sidebar-foreground: oklch(35% 0 0);
+  --sidebar-primary: oklch(75% 0.12 55);
+  --sidebar-primary-foreground: oklch(99% 0.002 55);
+  --sidebar-accent: oklch(92% 0.04 55);
+  --sidebar-accent-foreground: oklch(35% 0 0);
+  --sidebar-border: oklch(90% 0.005 55);
+  --sidebar-ring: oklch(75% 0.08 55);
 }
 
 @theme inline {
@@ -96,13 +86,240 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* 自定义色彩拓展名 */
+  --color-warm-50: #fefdfb;
+  --color-warm-100: #fdf8f0;
+  --color-warm-200: #f5ede3;
+  --color-warm-300: #e8ddd0;
+  --color-warm-400: #c4b5a2;
+  --color-warm-500: #8c7a66;
+  --color-warm-600: #5c4d3c;
+  --color-warm-700: #3d3228;
+  --color-warm-800: #1f1a14;
+  --color-primary-50: #fff8f0;
+  --color-primary-100: #ffedd5;
+  --color-primary-200: #fed7aa;
+  --color-primary-300: #fdba74;
+  --color-primary-400: #fb923c;
+  --color-primary-500: #f97316;
+  --color-primary-600: #ea580c;
+  --color-primary-700: #c2410c;
+  --color-spring-50: #f0fdf4;
+  --color-spring-100: #dcfce7;
+  --color-spring-200: #bbf7d0;
+  --color-spring-300: #86efac;
+  --color-spring-400: #4ade80;
+  --color-spring-500: #22c55e;
+  --color-spring-600: #16a34a;
+  --color-spring-700: #15803d;
 }
 
 @layer base {
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-background text-foreground;
+  html {
+    scroll-behavior: smooth;
   }
+  body {
+    @apply bg-[var(--color-bg)] text-[var(--color-text)];
+    font-feature-settings: "kern", "liga", "clig", "calt";
+  }
+  ::selection {
+    background-color: oklch(92% 0.04 55);
+    color: oklch(15% 0 0);
+  }
+}
+
+/* ===== 动画定义 ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes staggerIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes breathe {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.98); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.animate-stagger {
+  animation: staggerIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+.animate-breathe {
+  animation: breathe 2s ease-in-out infinite;
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.stagger-delay-1 { animation-delay: 0.05s; }
+.stagger-delay-2 { animation-delay: 0.1s; }
+.stagger-delay-3 { animation-delay: 0.15s; }
+.stagger-delay-4 { animation-delay: 0.2s; }
+.stagger-delay-5 { animation-delay: 0.25s; }
+.stagger-delay-6 { animation-delay: 0.3s; }
+.stagger-delay-7 { animation-delay: 0.35s; }
+.stagger-delay-8 { animation-delay: 0.4s; }
+
+/* ===== 工具类 ===== */
+.btn-spring {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0.75rem;
+  background-color: var(--primary);
+  color: white;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+  border: none;
+  line-height: 1;
+}
+.btn-spring:hover {
+  background-color: var(--color-primary-deep);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  transform: translateY(-0.125rem);
+}
+.btn-spring:active {
+  transform: scale(0.97);
+}
+
+.card-spring {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-spring:hover {
+  box-shadow: 0 10px 15px -3px oklch(75% 0.12 55 / 0.1);
+  border-color: var(--color-primary);
+  transform: translateY(-0.25rem);
+}
+
+.nav-glass {
+  background-color: rgb(255 255 255 / 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.sidebar-glass {
+  background-color: rgb(254 253 251 / 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-right: 1px solid oklch(92% 0.005 55 / 0.4);
+}
+
+/* ===== 渐变分割线 ===== */
+.gradient-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-border), transparent);
+  border: none;
+  margin: 1.5rem 0;
+}
+
+/* ===== 标签 Pill 样式 ===== */
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 9999px;
+  background-color: oklch(94% 0.04 155);
+  color: oklch(40% 0.12 155);
+  transition: all 0.2s ease;
+}
+.tag-pill:hover {
+  background-color: oklch(88% 0.06 155);
+}
+
+/* ===== 笔记类型色条 ===== */
+.note-type-bar-excerpt {
+  width: 4px;
+  border-radius: 2px;
+  background-color: var(--color-primary);
+  flex-shrink: 0;
+}
+.note-type-bar-thought {
+  width: 4px;
+  border-radius: 2px;
+  background-color: var(--color-accent);
+  flex-shrink: 0;
+}
+.note-type-bar-question {
+  width: 4px;
+  border-radius: 2px;
+  background-color: oklch(72% 0.16 75);
+  flex-shrink: 0;
+}
+
+/* ===== 渐变装饰圆 ===== */
+.deco-circle-top {
+  position: absolute;
+  top: -10rem;
+  right: -10rem;
+  width: 30rem;
+  height: 30rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(92% 0.04 55 / 0.5), oklch(94% 0.04 155 / 0.3), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+.deco-circle-bottom {
+  position: absolute;
+  bottom: -5rem;
+  left: -5rem;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(94% 0.04 155 / 0.4), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ===== 空状态 SVG 几何图形 ===== */
+.empty-state-graphic {
+  width: 120px;
+  height: 120px;
+  position: relative;
+}
+.empty-state-graphic::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 2px dashed var(--color-border);
+  border-radius: 50%;
+}
+.empty-state-graphic::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-primary-light);
 }
