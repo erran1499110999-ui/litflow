@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import NoteEditor from "@/components/NoteEditor";
+import FileDropZone from "@/components/FileDropZone";
 import {
   Card,
   CardContent,
@@ -24,7 +25,6 @@ import {
   X,
   ChevronDown,
   ChevronRight,
-  Upload,
 } from "lucide-react";
 
 const PRESET_TAGS = ["方法", "结论", "背景", "局限", "创新点", "数据", "理论"];
@@ -96,16 +96,6 @@ export default function NewNotePage({
     }
   };
 
-  const handleFileDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setDragOver(false);
-    const droppedFiles = Array.from(e.dataTransfer.files);
-    setFiles((prev) => [...prev, ...droppedFiles].slice(0, 5));
-  };
-
-  const removeFile = (index: number) => {
-    setFiles((prev) => prev.filter((_, i) => i !== index));
-  };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
@@ -384,65 +374,7 @@ export default function NewNotePage({
             <Label className="text-sm font-medium text-[var(--color-text)]">
               附件（选填）
             </Label>
-            <div
-              className={`relative rounded-xl border-2 border-dashed p-8 text-center transition-all ${
-                dragOver
-                  ? "border-primary-500 bg-primary-50"
-                  : "border-[var(--color-border)] hover:border-[var(--color-border-hover)]"
-              }`}
-              onDragOver={(e) => (e.preventDefault(), setDragOver(true))}
-              onDragLeave={() => setDragOver(false)}
-              onDrop={handleFileDrop}
-            >
-              <Upload
-                className={`mx-auto mb-3 h-8 w-8 ${
-                  dragOver
-                    ? "text-primary-500"
-                    : "text-[var(--color-text-muted)]"
-                }`}
-                strokeWidth={1.5}
-              />
-              <p className="text-sm text-[var(--color-text-secondary)]">
-                拖拽文件到此处，或点击上传
-              </p>
-              <p className="mt-1 text-xs text-[var(--color-text-muted)]">
-                支持 PDF / Word / Markdown
-              </p>
-              <input
-                type="file"
-                className="absolute inset-0 cursor-pointer opacity-0"
-                accept=".pdf,.docx,.md,.txt,.html"
-                onChange={(e) => {
-                  const selectedFiles = Array.from(e.target.files || []);
-                  setFiles((prev) => [...prev, ...selectedFiles].slice(0, 5));
-                }}
-              />
-            </div>
-            {files.length > 0 && (
-              <div className="space-y-2">
-                {files.map((file, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center justify-between rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 animate-fade-in-up"
-                  >
-                    <div className="flex items-center gap-3 text-sm">
-                      <span className="text-[var(--color-text)]">
-                        {file.name}
-                      </span>
-                      <span className="text-xs text-[var(--color-text-muted)]">
-                        {(file.size / 1024).toFixed(1)} KB
-                      </span>
-                    </div>
-                    <button
-                      onClick={() => removeFile(i)}
-                      className="text-[var(--color-text-muted)] hover:text-red-500"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
+            <FileDropZone files={files} onFilesChange={setFiles} />
           </div>
         </CardContent>
 

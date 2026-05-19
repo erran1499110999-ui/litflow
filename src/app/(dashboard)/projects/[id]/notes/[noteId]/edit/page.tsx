@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import NoteEditor from "@/components/NoteEditor";
+import FileDropZone from "@/components/FileDropZone";
 import {
   Card,
   CardContent,
@@ -78,6 +79,7 @@ export default function EditNotePage({
   const [error, setError] = useState<string | null>(null);
   const [showPaperInfo, setShowPaperInfo] = useState(false);
   const [charCount, setCharCount] = useState(0);
+  const [files, setFiles] = useState<File[]>([]);
 
   useEffect(() => {
     const fetchNote = async () => {
@@ -356,6 +358,14 @@ export default function EditNotePage({
                 添加
               </Button>
             </div>
+          </div>
+
+          {/* 文件拖拽上传 */}
+          <div className="space-y-2">
+            <Label className="text-sm font-medium text-[var(--color-text)]">
+              附件（选填）
+            </Label>
+            <FileDropZone files={files} onFilesChange={setFiles} />
           </div>
         </CardContent>
 
