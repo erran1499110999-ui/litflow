@@ -45,7 +45,7 @@ export default function RegisterPage() {
     const { createClient } = await import("@/lib/supabase/client");
     const supabase = createClient();
 
-    const { error: signUpError } = await supabase.auth.signUp({
+    const { error: signUpError, data } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -63,6 +63,13 @@ export default function RegisterPage() {
           : signUpError.message
       );
       setLoading(false);
+      return;
+    }
+
+    // 如果邮箱验证已关闭，直接登录成功跳转到项目页
+    if (data?.user?.identities && data.user.identities.length > 0) {
+      router.push("/projects");
+      router.refresh();
       return;
     }
 
