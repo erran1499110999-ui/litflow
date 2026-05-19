@@ -249,8 +249,11 @@ export default function NewNotePage({
               </span>
             </Label>
             <NoteEditor
-              content=""
-              onChange={(html) => setContent(html)}
+              content={content}
+              onChange={(text) => {
+                setContent(text);
+                setCharCount(text.length);
+              }}
               placeholder="输入你的笔记内容..."
               minHeight="280px"
             />

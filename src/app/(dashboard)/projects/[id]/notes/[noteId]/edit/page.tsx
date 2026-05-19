@@ -242,7 +242,10 @@ export default function EditNotePage({
             </Label>
             <NoteEditor
               content={content}
-              onChange={(html) => setContent(html)}
+              onChange={(text) => {
+                setContent(text);
+                setCharCount(text.length);
+              }}
               placeholder="编辑笔记内容..."
               minHeight="280px"
             />

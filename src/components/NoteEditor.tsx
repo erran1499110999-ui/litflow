@@ -26,7 +26,7 @@ import { useState, useCallback } from "react";
 
 interface NoteEditorProps {
   content: string;
-  onChange: (html: string) => void;
+  onChange: (text: string) => void;
   placeholder?: string;
   minHeight?: string;
 }
@@ -64,7 +64,7 @@ export default function NoteEditor({
     ],
     content,
     onUpdate: ({ editor }) => {
-      onChange(editor.getHTML());
+      onChange(editor.getText({ blockSeparator: "\n\n" }));
     },
     editorProps: {
       attributes: {
