@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, use } from "react";
+import { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -23,8 +23,8 @@ import {
   X,
   ChevronDown,
   ChevronRight,
-  Upload,
 } from "lucide-react";
+import type { Note } from "@/types";
 
 const PRESET_TAGS = ["方法", "结论", "背景", "局限", "创新点", "数据", "理论"];
 
@@ -35,8 +35,7 @@ const NOTE_TYPE_OPTIONS = [
     label: "文献摘录",
     desc: "论文原文或重点摘抄",
     barColor: "bg-primary-500",
-    bgColor: "bg-primary-50",
-    textColor: "text-primary-600",
+    color: "text-primary-600",
   },
   {
     value: "thought" as const,
@@ -44,8 +43,7 @@ const NOTE_TYPE_OPTIONS = [
     label: "个人想法",
     desc: "你的思考和见解",
     barColor: "bg-spring-500",
-    bgColor: "bg-spring-50",
-    textColor: "text-spring-600",
+    color: "text-spring-600",
   },
   {
     value: "question" as const,
@@ -53,19 +51,19 @@ const NOTE_TYPE_OPTIONS = [
     label: "疑问",
     desc: "阅读中产生的问题",
     barColor: "bg-amber-500",
-    bgColor: "bg-amber-50",
-    textColor: "text-amber-600",
+    color: "text-amber-600",
   },
 ];
 
-export default function NewNotePage({
+export default function EditNotePage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string; noteId: string }>;
 }) {
-  const { id } = use(params);
+  const { id, noteId } = use(params);
   const router = useRouter();
 
+  const [loading, setLoading] = useState(true);
   const [content, setContent] = useState("");
   const [paperTitle, setPaperTitle] = useState("");
   const [paperAuthors, setPaperAuthors] = useState("");
@@ -78,9 +76,31 @@ export default function NewNotePage({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showPaperInfo, setShowPaperInfo] = useState(false);
-  const [files, setFiles] = useState<File[]>([]);
-  const [dragOver, setDragOver] = useState(false);
   const [charCount, setCharCount] = useState(0);
+
+  useEffect(() => {
+    const fetchNote = async () => {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      const { data } = await supabase
+        .from("notes")
+        .select("*")
+        .eq("id", noteId)
+        .single();
+      if (data) {
+        setContent(data.content || "");
+        setPaperTitle(data.paper_title || "");
+        setPaperAuthors(data.paper_authors || "");
+        setPaperYear(data.paper_year || "");
+        setSelectedTags(data.tags || []);
+        setNoteType(data.note_type || "excerpt");
+        setCharCount(data.content?.length || 0);
+        if (data.paper_title) setShowPaperInfo(true);
+      }
+      setLoading(false);
+    };
+    fetchNote();
+  }, [noteId]);
 
   const toggleTag = (tag: string) => {
     setSelectedTags((prev) =>
@@ -95,22 +115,6 @@ export default function NewNotePage({
     }
   };
 
-  const handleFileDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setDragOver(false);
-    const droppedFiles = Array.from(e.dataTransfer.files);
-    setFiles((prev) => [...prev, ...droppedFiles].slice(0, 5));
-  };
-
-  const removeFile = (index: number) => {
-    setFiles((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-    setCharCount(e.target.value.length);
-  };
-
   const handleSave = async () => {
     if (!content.trim()) {
       setError("请输入笔记内容");
@@ -122,48 +126,39 @@ export default function NewNotePage({
     const { createClient } = await import("@/lib/supabase/client");
     const supabase = createClient();
 
-    const { data: userData } = await supabase.auth.getUser();
-    if (!userData.user) {
-      setError("用户未登录");
-      setSaving(false);
-      return;
-    }
+    const { error: updateError } = await supabase
+      .from("notes")
+      .update({
+        content: content.trim(),
+        paper_title: paperTitle.trim() || null,
+        paper_authors: paperAuthors.trim() || null,
+        paper_year: paperYear || null,
+        tags: selectedTags,
+        note_type: noteType,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", noteId);
 
-    const { error: insertError } = await supabase.from("notes").insert({
-      project_id: id,
-      user_id: userData.user.id,
-      content: content.trim(),
-      paper_title: paperTitle.trim() || null,
-      paper_authors: paperAuthors.trim() || null,
-      paper_year: paperYear || null,
-      tags: selectedTags,
-      note_type: noteType,
-    });
-
-    if (insertError) {
+    if (updateError) {
       setError("保存失败，请重试");
       setSaving(false);
       return;
     }
 
-    const { data: currentProject } = await supabase
-      .from("projects")
-      .select("note_count")
-      .eq("id", id)
-      .single();
-
-    await supabase
-      .from("projects")
-      .update({ note_count: (currentProject?.note_count || 0) + 1 })
-      .eq("id", id);
-
     router.push(`/projects/${id}`);
     router.refresh();
   };
 
+  if (loading) {
+    return (
+      <div className="mx-auto max-w-3xl py-20 text-center">
+        <div className="h-8 w-8 animate-breathe rounded-full bg-primary-500/30 mx-auto" />
+      </div>
+    );
+  }
+
   return (
     <div className="mx-auto max-w-3xl animate-fade-in-up">
-      {/* 返回链接 */}
       <Link
         href={`/projects/${id}`}
         className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
@@ -178,21 +173,18 @@ export default function NewNotePage({
             className="text-xl text-[var(--color-text)]"
             style={{ fontFamily: "var(--font-noto-serif-sc)" }}
           >
-            添加文献笔记
+            编辑笔记
           </CardTitle>
-          <CardDescription>
-            记录你在阅读论文时的摘录、想法或疑问
-          </CardDescription>
+          <CardDescription>修改你的文献笔记内容</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* 错误提示 */}
           {error && (
             <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-600">
               {error}
             </div>
           )}
 
-          {/* 笔记类型选择 */}
+          {/* 笔记类型 */}
           <div className="space-y-2">
             <Label className="text-sm font-medium text-[var(--color-text)]">
               笔记类型
@@ -219,13 +211,13 @@ export default function NewNotePage({
                     )}
                     <Icon
                       className={`mb-2 h-5 w-5 ${
-                        active ? type.textColor : "text-[var(--color-text-muted)]"
+                        active ? type.color : "text-[var(--color-text-muted)]"
                       }`}
                       strokeWidth={1.5}
                     />
                     <div
                       className={`text-sm font-medium ${
-                        active ? type.textColor : "text-[var(--color-text)]"
+                        active ? type.color : "text-[var(--color-text)]"
                       }`}
                     >
                       {type.label}
@@ -246,22 +238,19 @@ export default function NewNotePage({
               className="flex items-center justify-between text-sm font-medium text-[var(--color-text)]"
             >
               <span>笔记内容 *</span>
-              <span
-                className={`text-xs ${
-                  charCount > 5000
-                    ? "text-amber-500"
-                    : "text-[var(--color-text-muted)]"
-                }`}
-              >
+              <span className="text-xs text-[var(--color-text-muted)]">
                 {charCount} 字
               </span>
             </Label>
             <Textarea
               id="content"
               placeholder="输入你的笔记内容，支持 Markdown 格式..."
-              className="min-h-[220px] resize-y rounded-xl border-[var(--color-border)] bg-[var(--color-bg)] p-4 text-sm leading-relaxed placeholder:text-[var(--color-text-muted)] focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
+              className="min-h-[220px] resize-y rounded-xl border-[var(--color-border)] bg-[var(--color-bg)] p-4 text-sm leading-relaxed"
               value={content}
-              onChange={handleContentChange}
+              onChange={(e) => {
+                setContent(e.target.value);
+                setCharCount(e.target.value.length);
+              }}
             />
           </div>
 
@@ -355,7 +344,9 @@ export default function NewNotePage({
                 placeholder="自定义标签"
                 value={customTag}
                 onChange={(e) => setCustomTag(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addCustomTag())}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && (e.preventDefault(), addCustomTag())
+                }
                 className="max-w-[200px] rounded-xl border-[var(--color-border)]"
               />
               <Button
@@ -368,87 +359,6 @@ export default function NewNotePage({
                 添加
               </Button>
             </div>
-            {selectedTags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {selectedTags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="inline-flex items-center gap-1 rounded-full bg-primary-50 px-3 py-1 text-xs font-medium text-primary-600"
-                  >
-                    {tag}
-                    <button onClick={() => toggleTag(tag)}>
-                      <X className="h-3 w-3" />
-                    </button>
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* 文件拖拽上传 */}
-          <div className="space-y-2">
-            <Label className="text-sm font-medium text-[var(--color-text)]">
-              附件（选填）
-            </Label>
-            <div
-              className={`relative rounded-xl border-2 border-dashed p-8 text-center transition-all ${
-                dragOver
-                  ? "border-primary-500 bg-primary-50"
-                  : "border-[var(--color-border)] hover:border-[var(--color-border-hover)]"
-              }`}
-              onDragOver={(e) => (e.preventDefault(), setDragOver(true))}
-              onDragLeave={() => setDragOver(false)}
-              onDrop={handleFileDrop}
-            >
-              <Upload
-                className={`mx-auto mb-3 h-8 w-8 ${
-                  dragOver
-                    ? "text-primary-500"
-                    : "text-[var(--color-text-muted)]"
-                }`}
-                strokeWidth={1.5}
-              />
-              <p className="text-sm text-[var(--color-text-secondary)]">
-                拖拽文件到此处，或点击上传
-              </p>
-              <p className="mt-1 text-xs text-[var(--color-text-muted)]">
-                支持 PDF / Word / Markdown
-              </p>
-              <input
-                type="file"
-                className="absolute inset-0 cursor-pointer opacity-0"
-                accept=".pdf,.docx,.md,.txt,.html"
-                onChange={(e) => {
-                  const selectedFiles = Array.from(e.target.files || []);
-                  setFiles((prev) => [...prev, ...selectedFiles].slice(0, 5));
-                }}
-              />
-            </div>
-            {files.length > 0 && (
-              <div className="space-y-2">
-                {files.map((file, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center justify-between rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 animate-fade-in-up"
-                  >
-                    <div className="flex items-center gap-3 text-sm">
-                      <span className="text-[var(--color-text)]">
-                        {file.name}
-                      </span>
-                      <span className="text-xs text-[var(--color-text-muted)]">
-                        {(file.size / 1024).toFixed(1)} KB
-                      </span>
-                    </div>
-                    <button
-                      onClick={() => removeFile(i)}
-                      className="text-[var(--color-text-muted)] hover:text-red-500"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
         </CardContent>
 
@@ -465,7 +375,7 @@ export default function NewNotePage({
             disabled={!content.trim() || saving}
             onClick={handleSave}
           >
-            {saving ? "保存中..." : "💾 保存笔记"}
+            {saving ? "保存中..." : "💾 保存修改"}
           </Button>
         </CardFooter>
       </Card>

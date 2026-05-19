@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Plus, FileText } from "lucide-react";
+import { Plus, FileText, BookOpen, Trash2, Sparkles, FolderOpen } from "lucide-react";
 import type { Project } from "@/types";
 
 export default function ProjectsPage() {
@@ -120,76 +120,99 @@ export default function ProjectsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#1e3a5f] border-t-transparent" />
+        <div className="h-8 w-8 animate-breathe rounded-full bg-primary-500/30" />
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-5xl">
-      <div className="mb-8 flex items-center justify-between">
+    <div className="mx-auto max-w-5xl animate-fade-in-up">
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-zinc-900">我的项目</h1>
-          <p className="mt-1 text-zinc-500">
+          <span className="inline-block rounded-full bg-primary-50 px-4 py-1.5 text-xs font-medium text-primary-600">
+            研究课题
+          </span>
+          <h1
+            className="mt-3 text-2xl font-semibold text-[var(--color-text)] lg:text-3xl"
+            style={{ fontFamily: "var(--font-noto-serif-sc)" }}
+          >
+            我的项目
+          </h1>
+          <p className="mt-1 text-sm text-[var(--color-text-secondary)]">
             管理你的研究课题和文献笔记
           </p>
         </div>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-[#1e3a5f] hover:bg-[#1e3a5f]/90">
-              <Plus className="mr-2 h-4 w-4" />
+            <Button className="btn-spring text-sm">
+              <Plus className="mr-1.5 h-4 w-4" />
               新建项目
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="rounded-2xl border-[var(--color-border)] bg-[var(--color-surface)]">
             <DialogHeader>
-              <DialogTitle>创建新项目</DialogTitle>
+              <DialogTitle
+                className="text-[var(--color-text)]"
+                style={{ fontFamily: "var(--font-noto-serif-sc)" }}
+              >
+                创建新项目
+              </DialogTitle>
               <DialogDescription>
                 创建一个研究课题，开始整理你的文献笔记
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label htmlFor="title">项目名称 *</Label>
+                <Label htmlFor="title" className="text-sm">
+                  项目名称 *
+                </Label>
                 <Input
                   id="title"
                   placeholder="如：大语言模型在教育中的应用"
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
+                  className="rounded-xl border-[var(--color-border)]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="description">项目描述</Label>
+                <Label htmlFor="description" className="text-sm">
+                  项目描述
+                </Label>
                 <Input
                   id="description"
                   placeholder="简单描述你的研究课题"
                   value={newDescription}
                   onChange={(e) => setNewDescription(e.target.value)}
+                  className="rounded-xl border-[var(--color-border)]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="field">研究领域</Label>
+                <Label htmlFor="field" className="text-sm">
+                  研究领域
+                </Label>
                 <Input
                   id="field"
                   placeholder="如：计算机科学/教育技术"
                   value={newField}
                   onChange={(e) => setNewField(e.target.value)}
+                  className="rounded-xl border-[var(--color-border)]"
                 />
               </div>
             </div>
-            <DialogFooter>
+            <DialogFooter className="gap-2">
               <Button
                 variant="outline"
                 onClick={() => setDialogOpen(false)}
+                className="rounded-xl border-[var(--color-border)]"
               >
                 取消
               </Button>
               <Button
-                className="bg-[#1e3a5f] hover:bg-[#1e3a5f]/90"
+                className="btn-spring"
                 disabled={!newTitle.trim() || creating}
                 onClick={createProject}
               >
-                {creating ? "创建中..." : "创建"}
+                {creating ? "创建中..." : "创建项目"}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -197,71 +220,116 @@ export default function ProjectsPage() {
       </div>
 
       {projects.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed py-20 text-center">
-          <FileText className="mb-4 h-12 w-12 text-zinc-300" />
-          <h3 className="text-lg font-medium text-zinc-600">还没有项目</h3>
-          <p className="mt-1 text-sm text-zinc-400">
-            创建第一个项目，开始整理你的文献笔记
+        // 空状态
+        <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[var(--color-border)] py-24 text-center">
+          <div className="empty-state-graphic mb-6" />
+          <h3 className="text-base font-medium text-[var(--color-text-secondary)]">
+            还没有项目
+          </h3>
+          <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+            创建第一个项目，开始整理你的文献笔记。AI 将帮你生成综述提纲。
           </p>
           <Button
-            className="mt-6 bg-[#1e3a5f] hover:bg-[#1e3a5f]/90"
+            className="btn-spring mt-6 text-sm"
             onClick={() => setDialogOpen(true)}
           >
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="mr-1.5 h-4 w-4" />
             创建项目
           </Button>
         </div>
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <Link key={project.id} href={`/projects/${project.id}`}>
-              <Card className="h-full transition-shadow hover:shadow-md">
-                <CardHeader>
-                  <CardTitle className="text-lg">{project.title}</CardTitle>
-                  {project.description && (
-                    <CardDescription className="line-clamp-2">
-                      {project.description}
-                    </CardDescription>
-                  )}
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center gap-4 text-sm text-zinc-500">
-                    <span>{project.note_count} 条笔记</span>
-                    {project.field && (
-                      <>
-                        <span>·</span>
-                        <span>{project.field}</span>
-                      </>
+        // 项目卡片网格
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {projects.map((project, i) => (
+            <div
+              key={project.id}
+              className="group relative animate-stagger"
+              style={{ animationDelay: `${i * 0.05}s` }}
+            >
+              <Link href={`/projects/${project.id}`}>
+                <Card className="card-spring h-full border-[var(--color-border)] bg-[var(--color-surface)]">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-start justify-between">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-100">
+                        <BookOpen
+                          className="h-5 w-5 text-primary-600"
+                          strokeWidth={1.5}
+                        />
+                      </div>
+                      <button
+                        className="rounded-lg p-1.5 opacity-0 transition-all group-hover:opacity-100 hover:bg-red-50"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setDeleteConfirm(project.id);
+                        }}
+                      >
+                        <Trash2 className="h-4 w-4 text-[var(--color-text-muted)] hover:text-red-500" />
+                      </button>
+                    </div>
+                    <CardTitle
+                      className="mt-3 text-lg text-[var(--color-text)]"
+                      style={{ fontFamily: "var(--font-noto-serif-sc)" }}
+                    >
+                      {project.title}
+                    </CardTitle>
+                    {project.description && (
+                      <CardDescription className="line-clamp-2 text-sm">
+                        {project.description}
+                      </CardDescription>
                     )}
-                  </div>
-                </CardContent>
-                <CardFooter className="text-xs text-zinc-400">
-                  更新于 {formatDate(project.updated_at)}
-                </CardFooter>
-              </Card>
-            </Link>
+                  </CardHeader>
+                  <CardContent className="pb-2">
+                    <div className="flex items-center gap-3 text-sm">
+                      <span className="flex items-center gap-1.5 text-[var(--color-text-secondary)]">
+                        <FileText className="h-3.5 w-3.5" strokeWidth={1.5} />
+                        {project.note_count} 条笔记
+                      </span>
+                      {project.field && (
+                        <span className="rounded-full bg-primary-50 px-2.5 py-0.5 text-xs text-primary-600">
+                          {project.field}
+                        </span>
+                      )}
+                    </div>
+                  </CardContent>
+                  <CardFooter className="pt-0">
+                    <span className="text-xs text-[var(--color-text-muted)]">
+                      更新于 {formatDate(project.updated_at)}
+                    </span>
+                  </CardFooter>
+                </Card>
+              </Link>
+            </div>
           ))}
         </div>
       )}
 
+      {/* 删除确认弹窗 */}
       <Dialog
         open={!!deleteConfirm}
         onOpenChange={(open) => !open && setDeleteConfirm(null)}
       >
-        <DialogContent>
+        <DialogContent className="rounded-2xl border-[var(--color-border)] bg-[var(--color-surface)]">
           <DialogHeader>
-            <DialogTitle>确认删除</DialogTitle>
+            <DialogTitle className="text-[var(--color-text)]">
+              确认删除项目
+            </DialogTitle>
             <DialogDescription>
               此操作不可撤销，项目及其所有笔记将被永久删除。
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setDeleteConfirm(null)}>
+          <DialogFooter className="gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setDeleteConfirm(null)}
+              className="rounded-xl border-[var(--color-border)]"
+            >
               取消
             </Button>
             <Button
               variant="destructive"
               onClick={() => deleteConfirm && deleteProject(deleteConfirm)}
+              className="rounded-xl"
             >
               确认删除
             </Button>
