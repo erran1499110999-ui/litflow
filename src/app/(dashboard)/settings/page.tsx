@@ -130,7 +130,7 @@ export default function SettingsPage() {
           <div className="grid grid-cols-2 gap-px rounded-xl bg-[var(--color-border)] overflow-hidden">
             <div className="bg-[var(--color-bg)] p-3">
               <span className="text-[var(--color-text-muted)] text-xs">版本</span>
-              <p className="text-[var(--color-text)] font-medium">2.0.0</p>
+                <p className="text-[var(--color-text)] font-medium">2.1.0</p>
             </div>
             <div className="bg-[var(--color-bg)] p-3">
               <span className="text-[var(--color-text-muted)] text-xs">状态</span>

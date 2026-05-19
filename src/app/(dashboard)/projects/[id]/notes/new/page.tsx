@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import NoteEditor from "@/components/NoteEditor";
 import {
   Card,
   CardContent,
@@ -241,27 +242,17 @@ export default function NewNotePage({
 
           {/* 笔记内容 */}
           <div className="space-y-2">
-            <Label
-              htmlFor="content"
-              className="flex items-center justify-between text-sm font-medium text-[var(--color-text)]"
-            >
+            <Label className="flex items-center justify-between text-sm font-medium text-[var(--color-text)]">
               <span>笔记内容 *</span>
-              <span
-                className={`text-xs ${
-                  charCount > 5000
-                    ? "text-amber-500"
-                    : "text-[var(--color-text-muted)]"
-                }`}
-              >
-                {charCount} 字
+              <span className="text-xs text-[var(--color-text-muted)]">
+                支持 Markdown 和富文本编辑
               </span>
             </Label>
-            <Textarea
-              id="content"
-              placeholder="输入你的笔记内容，支持 Markdown 格式..."
-              className="min-h-[220px] resize-y rounded-xl border-[var(--color-border)] bg-[var(--color-bg)] p-4 text-sm leading-relaxed placeholder:text-[var(--color-text-muted)] focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
-              value={content}
-              onChange={handleContentChange}
+            <NoteEditor
+              content=""
+              onChange={(html) => setContent(html)}
+              placeholder="输入你的笔记内容..."
+              minHeight="280px"
             />
           </div>
 

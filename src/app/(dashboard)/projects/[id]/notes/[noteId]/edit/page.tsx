@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import NoteEditor from "@/components/NoteEditor";
 import {
   Card,
   CardContent,
@@ -233,24 +234,17 @@ export default function EditNotePage({
 
           {/* 笔记内容 */}
           <div className="space-y-2">
-            <Label
-              htmlFor="content"
-              className="flex items-center justify-between text-sm font-medium text-[var(--color-text)]"
-            >
+            <Label className="flex items-center justify-between text-sm font-medium text-[var(--color-text)]">
               <span>笔记内容 *</span>
               <span className="text-xs text-[var(--color-text-muted)]">
-                {charCount} 字
+                支持 Markdown 和富文本编辑
               </span>
             </Label>
-            <Textarea
-              id="content"
-              placeholder="输入你的笔记内容，支持 Markdown 格式..."
-              className="min-h-[220px] resize-y rounded-xl border-[var(--color-border)] bg-[var(--color-bg)] p-4 text-sm leading-relaxed"
-              value={content}
-              onChange={(e) => {
-                setContent(e.target.value);
-                setCharCount(e.target.value.length);
-              }}
+            <NoteEditor
+              content={content}
+              onChange={(html) => setContent(html)}
+              placeholder="编辑笔记内容..."
+              minHeight="280px"
             />
           </div>
 

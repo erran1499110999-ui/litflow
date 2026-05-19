@@ -25,6 +25,7 @@ import {
   Network,
   Lightbulb,
   FileText,
+  ExternalLink,
 } from "lucide-react";
 import type { OutlineContent } from "@/types";
 
@@ -454,16 +455,28 @@ export default function OutlinePage({
 
           {/* 论文关系 */}
           <section>
-            <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-spring-100">
-                <Network
-                  className="h-4 w-4 text-spring-600"
-                  strokeWidth={1.5}
-                />
+            <div className="mb-4 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-spring-100">
+                  <Network
+                    className="h-4 w-4 text-spring-600"
+                    strokeWidth={1.5}
+                  />
+                </div>
+                <h2 className="text-lg font-medium text-[var(--color-text)]">
+                  论文关系
+                </h2>
               </div>
-              <h2 className="text-lg font-medium text-[var(--color-text)]">
-                论文关系
-              </h2>
+              {outline.relationships.length > 0 && (
+                <Link
+                  href="/knowledge-graph"
+                  className="inline-flex items-center gap-1 text-xs font-medium text-spring-600 hover:text-spring-700 transition-colors"
+                >
+                  <Network className="h-3.5 w-3.5" strokeWidth={1.5} />
+                  查看知识图谱
+                  <ExternalLink className="h-3 w-3" strokeWidth={1.5} />
+                </Link>
+              )}
             </div>
             <Card className="border-[var(--color-border)]">
               <CardContent className="space-y-3 py-5">

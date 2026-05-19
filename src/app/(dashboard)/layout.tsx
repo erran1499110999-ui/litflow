@@ -12,10 +12,12 @@ import {
   X,
   FileText,
   GitCommit,
+  Network,
 } from "lucide-react";
 
 const NAV_ITEMS = [
   { href: "/projects", label: "我的项目", icon: BookOpen },
+  { href: "/knowledge-graph", label: "知识图谱", icon: Network },
   { href: "/changelog", label: "更新日志", icon: GitCommit },
   { href: "/settings", label: "设置", icon: Settings },
 ];
